@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  mysql-primary:
+    image: 'bitnami/mysql:latest'
+    environment:
+      - MYSQL_DATABASE=mydatabase
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=admin123
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=123
+      - MARIADB_CHARACTER_SET=utf8mb
+      - MARIADB_COLLATE=utf8mb_general_ci
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-persistence:/bitnami/mysql/data
+      - ./my_custom.cnf:/opt/bitnami/mysql/conf/my_custom.cnf
+
+  redis-primary:
+    image: 'bitnami/redis:latest'
+    environment:
+      - REDIS_PASSWORD=123
+      - REDIS_MASTER_PASSWORD=admin123
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-persistence:/bitnami
+
+  mongodb-primary:
+    image: 'bitnami/mongodb:latest'
+    environment:
+      - MONGODB_USERNAME=user
+      - MONGODB_PASSWORD=123
+      - MONGODB_DATABASE=admin
+      - MONGODB_ROOT_PASSWORD=admin123
+    ports:
+      - "27017:27017"
+    volumes:
+      - 'mongodb_master_data:/bitnami'
+
+volumes:
+  mongodb_master_data:
+    driver: local
+  redis_master_data:
+    driver: local
