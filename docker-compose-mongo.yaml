@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  mongodb-primary:
+    image: 'bitnami/mongodb:latest'
+    environment:
+      - MONGODB_USERNAME=user
+      - MONGODB_PASSWORD=123
+      - MONGODB_DATABASE=admin
+      - MONGODB_ROOT_PASSWORD=admin123
+    ports:
+      - "27017:27017"
+    volumes:
+      - 'mongodb_master_data:/bitnami'
+
+volumes:
+  mongodb_master_data:
+    driver: local
